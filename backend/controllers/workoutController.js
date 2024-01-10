@@ -62,15 +62,15 @@ async function editWorkout(req, res){
 
     if (!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error: "Workout not found"});
-    }
+    };
 
     const workout = await Workout.findOneAndUpdate({_id: id}, {
         ...req.body
-    })
+    });
 
     if (!workout){
         return res.status(404).json({error: "Workout not found"});
-    }
+    };
 
     res.status(200).json(workout);
 }

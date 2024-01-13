@@ -8,15 +8,15 @@ const workoutSchema = new Schema({
         required: true
     },
     sets: {
-        type: Number,
+        type: String,
         required: true
     },
     reps: {
-        type: Number,
+        type: String,
         required: true
     },
     weight: {
-        type: Number,
+        type: String,
         required: true
     }
 }, {timestamps: true});

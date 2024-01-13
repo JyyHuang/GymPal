@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // GET all workouts
 async function getWorkouts(req, res){
     // find all data
-    const workouts = await Workout.find({}).sort({createdAt: -1});
+    const workouts = await Workout.find({}).sort({updatedAt: -1});
 
     res.status(200).json(workouts);
 }
@@ -29,6 +29,26 @@ async function getSingleWorkout(req, res){
 // POST new workout
 async function createWorkout(req, res){
     const { workoutName, sets, reps, weight } = req.body;
+
+    // Handle User Error Messages
+    let missingFields = []
+
+    if (!workoutName){
+        missingFields.push('Workout Name')
+    }
+    if (!sets){
+        missingFields.push('Sets')
+    }
+    if (!reps){
+        missingFields.push('Reps')
+    }
+    if (!weight){
+        missingFields.push('Weight')
+    }
+    if (missingFields.length > 0){
+        return res.status(400).json({error:'Fill in all fields!', missingFields})
+    }
+    
 
     // add to mongodb
     try {
@@ -60,19 +80,44 @@ async function deleteWorkout(req, res){
 async function editWorkout(req, res){
     const {id} = req.params;
 
+    const { workoutName, sets, reps, weight } = req.body;
+
+    // Handle User Error Messages
+    const missingFields = []
+
+    if (!workoutName){
+        missingFields.push('Workout Name')
+    }
+    if (!sets){
+        missingFields.push('Sets')
+    }
+    if (!reps){
+        missingFields.push('Reps')
+    }
+    if (!weight){
+        missingFields.push('Weight')
+    }
+    if (missingFields.length > 0){
+        return res.status(400).json({error:'Fill in all fields!', missingFields})
+    }
+
     if (!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error: "Workout not found"});
     };
 
-    const workout = await Workout.findOneAndUpdate({_id: id}, {
-        ...req.body
-    });
-
-    if (!workout){
-        return res.status(404).json({error: "Workout not found"});
-    };
-
-    res.status(200).json(workout);
+    try{
+        const workout = await Workout.findOneAndUpdate({_id: id}, {
+            ...req.body
+        }, {new: true});
+    
+        if (!workout){
+            return res.status(404).json({error: "Workout not found"});
+        };
+    
+        res.status(200).json(workout);
+    } catch (error){
+        res.status(400).json({error: error.message});
+    }
 }
 
 module.exports = {

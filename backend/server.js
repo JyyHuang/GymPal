@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const workoutRoutes = require('./routes/workouts');
-//const calorieRoutes = require('./routes/calories');
+const nutritionRoutes = require('./routes/nutrition');
 
 
 // express app
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 // workout routes
 app.use('/api/GymPal/workouts/', workoutRoutes);
 // calorie routes
-//app.use('api/GymPal/calories/', calorieRoutes);
+app.use('/api/GymPal/nutrition/', nutritionRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

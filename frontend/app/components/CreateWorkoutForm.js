@@ -10,9 +10,11 @@ const CreateWorkoutForm = ({setModal}) => {
 
     return (
         <View>
-            <Formik 
+            <Formik
+                // Initialize values to empty strings
                 initialValues={{workoutName: '', sets: '', reps: '', weight: ''}} 
                 onSubmit={ async (values) => {
+                    // Post request to backend api to create new workout
                     const response = await fetch('http://10.0.2.2:3000/api/GymPal/workouts/', {
                         method: 'POST',
                         body: JSON.stringify(values),
@@ -23,12 +25,15 @@ const CreateWorkoutForm = ({setModal}) => {
                     
                     const workoutJson = await response.json();
                     
+                    // If response fails, set an error and set the missing fields
+                    // Should only happen whenever user doesn't input a field
                     if (!response.ok){
                         setError(workoutJson.error);
                         setMissingFields(workoutJson.missingFields);
 
                     }
 
+                    // If response succeeds, then dispatch to reducer
                     if (response.ok){
                         setError(null);
                         setMissingFields([]);
@@ -44,6 +49,7 @@ const CreateWorkoutForm = ({setModal}) => {
                         placeholder="Workout Name"
                         onChangeText={formikProps.handleChange('workoutName')}
                         value={formikProps.values.workoutName}
+                        onSubmitEditing={formikProps.handleSubmit}
                         className={`border m-2 p-2 rounded text-base ${missingFields.includes("Workout Name") ? 'border-red-200': 'border-gray-300'}`}
                     />
 
@@ -51,6 +57,7 @@ const CreateWorkoutForm = ({setModal}) => {
                         placeholder="Sets"
                         onChangeText={formikProps.handleChange('sets')}
                         value={formikProps.values.sets}
+                        onSubmitEditing={formikProps.handleSubmit}
                         className={`border ml-2 mr-2 p-2 rounded text-base ${missingFields.includes("Sets") ? 'border-red-200': 'border-gray-300'}`}
                     />
 
@@ -58,6 +65,7 @@ const CreateWorkoutForm = ({setModal}) => {
                         placeholder="Reps"
                         onChangeText={formikProps.handleChange('reps')}
                         value={formikProps.values.reps}
+                        onSubmitEditing={formikProps.handleSubmit}
                         className={`border mt-2 ml-2 mr-2 p-2 rounded text-base ${missingFields.includes("Reps") ? 'border-red-200': 'border-gray-300'}`}
                     />
 
@@ -65,6 +73,7 @@ const CreateWorkoutForm = ({setModal}) => {
                         placeholder="Weight"
                         onChangeText={formikProps.handleChange('weight')}
                         value={formikProps.values.weight}
+                        onSubmitEditing={formikProps.handleSubmit}
                         className={`border m-2 p-2 rounded text-base ${missingFields.includes("Weight") ? 'border-red-200': 'border-gray-300'}`}
                     />
                     <Button title="add" color='black' onPress={formikProps.handleSubmit}></Button>

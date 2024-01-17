@@ -11,9 +11,11 @@ const EditWorkoutForm = ({workout, setEditModalState}) => {
 
     return(
         <View>
-            <Formik 
+            <Formik
+                // Set initial values to current workout values
                 initialValues={{workoutName: workout.workoutName, sets: workout.sets, reps: workout.reps, weight: workout.weight}} 
                 onSubmit={ async (values) => {
+                    // PATCH request to backend api
                     const response = await fetch('http://10.0.2.2:3000/api/GymPal/workouts/' + workout._id, {
                         method: 'PATCH',
                         body: JSON.stringify(values),
@@ -29,7 +31,8 @@ const EditWorkoutForm = ({workout, setEditModalState}) => {
                         setError(workoutJson.error);
                         setMissingFields(workoutJson.missingFields);
                     }
-
+                    
+                    // If response succeeds, dispatch to reducer
                     if (response.ok){
                         setError(null);
                         setMissingFields([]);

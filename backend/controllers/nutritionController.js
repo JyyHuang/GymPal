@@ -18,7 +18,7 @@ async function getFoodQuery(req,res) {
         return res.status(400).json({error: 'Please input a search'})
     }
 
-    const foods = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.FDC_API_KEY}&query=${param}&pageSize=6`,{
+    const foods = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.FDC_API_KEY}&query=${param}&pageSize=10`,{
         method:'GET',
         headers: {
             'Content-type': 'application/json'
@@ -35,10 +35,10 @@ async function getFoodQuery(req,res) {
 
 // POST new food
 async function createFoodItem(req, res){
-    const {foodName, calories, protein, carbs, fat} = req.body;
+    const {foodName, calories, protein, fat} = req.body;
 
     try {
-        const food = await Nutrition.create({foodName, calories, protein, carbs, fat});
+        const food = await Nutrition.create({foodName, calories, protein, fat});
         res.status(200).json(food);
     } catch (error) {
         res.status(400).json({error: error.message});

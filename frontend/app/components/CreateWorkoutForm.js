@@ -22,7 +22,7 @@ const CreateWorkoutForm = ({setModal}) => {
                             'Content-Type': 'application/json'
                         }
                     })
-                    
+                    console.log(values)
                     const workoutJson = await response.json();
                     
                     // If response fails, set an error and set the missing fields

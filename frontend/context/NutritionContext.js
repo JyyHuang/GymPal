@@ -9,14 +9,6 @@ export const nutritionReducer = (state, action) => {
             return {
                 nutrition: action.payload
             }
-        case "SEARCH_NUTRITION":
-            return{
-                nutrition: action.payload
-            }
-        case "OPEN_SEARCH_MODAL":
-            return {
-                nutrition: null
-            }
         case "CREATE_NUTRITION":
             return {
                 nutrition: [action.payload, ...state.nutrition]

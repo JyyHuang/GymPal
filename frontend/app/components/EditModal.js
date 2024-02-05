@@ -1,4 +1,4 @@
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, TouchableOpacity, View } from "react-native";
 import EditWorkoutForm from "./EditWorkoutForm";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 

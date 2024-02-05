@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Modal, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
+import { View, Text, TouchableOpacity, Modal, ScrollView, TouchableWithoutFeedback } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import {useNutritionContext} from '../../hooks/useNutritionContext';
 import { useState, useEffect } from "react";
@@ -61,7 +61,7 @@ const nutritionPage = () => {
             console.log(err);
         }
     }
-
+        
     return (
     <View className='flex-1 bg-neutral-800'>
         

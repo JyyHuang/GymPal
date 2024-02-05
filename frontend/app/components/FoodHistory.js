@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, TouchableOpacity } from "react-native"
+import { ScrollView, View, } from "react-native"
 import { useNutritionContext } from "../../hooks/useNutritionContext";
 import FoodHistoryInfo from "./FoodHistoryInfo";
 

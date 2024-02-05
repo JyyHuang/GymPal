@@ -13,7 +13,7 @@ const TabsLayout = () => {
         <NutritionContextProvider>
             <SafeAreaView></SafeAreaView>
             <Tabs >
-                <Tabs.Screen name="nutrition" 
+                <Tabs.Screen name="index" 
                     options={{
                         headerTitle: "Workouts",
                         headerStyle: {
@@ -34,7 +34,7 @@ const TabsLayout = () => {
                             return <Ionicons name={iconName} size={24} color='white'/>}
                         }}
                         />
-                <Tabs.Screen name="index" 
+                <Tabs.Screen name="nutrition" 
                     options={{
                         headerTitle: "Nutrition",
                         headerStyle: {

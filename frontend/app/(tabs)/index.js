@@ -1,5 +1,5 @@
 import { FontAwesome5 } from '@expo/vector-icons';
-import { View, ScrollView, TouchableOpacity, Modal, Text } from "react-native";
+import { View, ScrollView, TouchableOpacity, Modal } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';

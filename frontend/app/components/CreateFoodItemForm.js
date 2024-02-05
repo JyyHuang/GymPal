@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {Formik} from 'formik';
-import { TextInput, View, Text, TouchableOpacity } from "react-native";
+import { TextInput, View, TouchableOpacity } from "react-native";
 import { EvilIcons } from '@expo/vector-icons';
 import FoodSearchItem from './FoodSearchItem';
 

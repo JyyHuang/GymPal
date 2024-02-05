@@ -30,7 +30,7 @@ const CreateFoodItemForm = ({setAddModal}) => {
                     if(response.ok){
 
                         setError(false)
-                        for (let i = 0; i < json.length; i++){
+                        for (let i = 0; i < json.length; ++i){
                             let foodObject = {};
                             const fdcId = json[i].fdcId;
                             const description = json[i].description
@@ -42,7 +42,7 @@ const CreateFoodItemForm = ({setAddModal}) => {
                             currObject = Object.assign(currObject, {'servingSizeUnit': servingSizeUnit})
                             
                             
-                            for (let j = 0; j < json[i].foodNutrients.length; j++){
+                            for (let j = 0; j < json[i].foodNutrients.length; ++j){
                                 if (json[i].foodNutrients[j].nutrientId === 1003){
                                     const protein = json[i].foodNutrients[j];
                                     currObject = Object.assign(currObject, {protein})
@@ -56,6 +56,7 @@ const CreateFoodItemForm = ({setAddModal}) => {
                             }
                             foodArray.push(currObject)
                         }
+                        console.log(foodArray)
                         setSearchItems(foodArray)
                     }
             }}>

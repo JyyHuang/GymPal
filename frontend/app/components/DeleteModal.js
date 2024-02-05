@@ -3,6 +3,12 @@ import { Modal, View, Text, TouchableOpacity } from "react-native";
 
 const DeleteModal = ({deleteModalState, setDeleteModalState, deleteFunction}) => {
     
+    const confirmDelete = () => {
+        deleteFunction();
+        setDeleteModalState(false)
+    }
+
+
     return(
         <Modal visible={deleteModalState} animationType='fade' transparent={true}>
                 <View className='flex-1 bg-[#000000aa] justify-center'>
@@ -11,7 +17,7 @@ const DeleteModal = ({deleteModalState, setDeleteModalState, deleteFunction}) =>
                             <Text className='text-center text-base'>Are you sure you want to delete?</Text>
                         </View>
                         <View className='flex-row justify-evenly'>
-                            <TouchableOpacity className='border border-r-0.5 border-zinc-400 flex-1 items-center justify-center p-2' onPress={deleteFunction}>
+                            <TouchableOpacity className='border border-r-0.5 border-zinc-400 flex-1 items-center justify-center p-2' onPress={confirmDelete}>
                                     <Text className>Yes</Text>
                             </TouchableOpacity>
                             <TouchableOpacity className='border border-l-0.5 border-zinc-400 flex-1 items-center justify-center p-2' onPress={() => setDeleteModalState(false)}>

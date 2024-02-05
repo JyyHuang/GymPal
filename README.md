@@ -13,4 +13,5 @@ App to track workouts and calories
 
 ### Sources
 FDC API
+
 U.S. Department of Agriculture, Agricultural Research Service. FoodData Central, 2019. fdc.nal.usda.gov.

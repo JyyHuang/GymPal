@@ -1,6 +1,6 @@
 # GymPal
 
-App to track workouts and calories
+App to track workouts and calories to motivate me to stay consistent.
 
 ### Tech Stack
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)

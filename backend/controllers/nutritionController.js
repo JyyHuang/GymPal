@@ -18,7 +18,7 @@ async function getFoodQuery(req,res) {
         return res.status(400).json({error: 'Please input a search'})
     }
 
-    const foods = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.FDC_API_KEY}&query=${param}&pageSize=10`,{
+    const foods = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.FDC_API_KEY}&query=${param}&pageSize=8`,{
         method:'GET',
         headers: {
             'Content-type': 'application/json'

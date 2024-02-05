@@ -19,7 +19,7 @@ export const nutritionReducer = (state, action) => {
             }
         case "DELETE_ALL_NUTRITION":
             return {
-                nutrition: null
+                nutrition: []
             }
         default:
             return state;

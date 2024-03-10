@@ -40,6 +40,7 @@ const LoginForm = ({setLoginModalState}) => {
                                 placeholderTextColor='white'
                                 onChangeText={formikProps.handleChange("password")}
                                 value={formikProps.values.password}
+                                secureTextEntry={true}
                                 className='border border-gray-400 m-3 rounded text-white p-2 mb-10'
                             />
                             <Button disabled={isLoading} title="Login" color="black" onPress={formikProps.handleSubmit}></Button>

@@ -3,7 +3,7 @@
 App to track workouts and calories to motivate me to stay consistent.
 
 ### Demo
-![](./frontend/assets/GymPalDemo.webm)
+https://github.com/JyyHuang/GymPal/assets/117778296/49dd5da8-fc9e-4806-a07a-79a5adaed9e0
 
 ### Tech Stack
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)

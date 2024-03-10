@@ -5,7 +5,10 @@ const mongoose = require('mongoose');
 
 // GET nutrition
 async function getNutrition(req, res){
-    const nutrition = await Nutrition.find({}).sort({createdAt: -1});
+    
+    const user_id = req.user._id
+
+    const nutrition = await Nutrition.find({user_id}).sort({createdAt: -1});
     
     res.status(200).json(nutrition);
 }
@@ -38,7 +41,8 @@ async function createFoodItem(req, res){
     const {foodName, calories, protein, fat} = req.body;
 
     try {
-        const food = await Nutrition.create({foodName, calories, protein, fat});
+        const user_id = req.user._id;
+        const food = await Nutrition.create({foodName, calories, protein, fat, user_id});
         res.status(200).json(food);
     } catch (error) {
         res.status(400).json({error: error.message});

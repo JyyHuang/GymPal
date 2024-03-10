@@ -18,7 +18,11 @@ const nutritionSchema = new Schema({
     fat: {
         type: Number,
         required: true
-    }
+    },
+    user_id: {
+        type: String,
+        required: true
+    },
 }, {timestamps: true})
 
 module.exports = mongoose.model("Nutrition", nutritionSchema)

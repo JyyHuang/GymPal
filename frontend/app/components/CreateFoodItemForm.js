@@ -3,10 +3,12 @@ import {Formik} from 'formik';
 import { TextInput, View, TouchableOpacity } from "react-native";
 import { EvilIcons } from '@expo/vector-icons';
 import FoodSearchItem from './FoodSearchItem';
+import { useAuthContext} from '../../hooks/useAuthContext'
 
 const CreateFoodItemForm = ({setAddModal}) => {
     const [searchItems, setSearchItems] = useState([]);
     const [error, setError] = useState(false);
+    const {user} = useAuthContext();
     
     let foodArray = [];
 
@@ -15,9 +17,16 @@ const CreateFoodItemForm = ({setAddModal}) => {
             <Formik
                 initialValues={{searchItem: ''}}
                 onSubmit={ async (values) => {
-                    
+                    if (!user){
+                        setError("Please log in")
+                        return;
+                    }
                     const response = await fetch(`http://10.0.2.2:3000/api/GymPal/nutrition/search?query=${values.searchItem}`,{
-                        method:'GET'
+                        method:'GET',
+
+                        headers: {
+                            'Authorization': `Bearer ${user.token}`
+                        }
                         }
                     )
                     
@@ -56,7 +65,6 @@ const CreateFoodItemForm = ({setAddModal}) => {
                             }
                             foodArray.push(currObject)
                         }
-                        console.log(foodArray)
                         setSearchItems(foodArray)
                     }
             }}>

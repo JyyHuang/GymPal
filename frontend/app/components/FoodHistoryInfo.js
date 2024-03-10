@@ -3,19 +3,26 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DeleteModal from "./DeleteModal";
 import { useState } from "react";
 import { useNutritionContext } from "../../hooks/useNutritionContext"
+import { useAuthContext} from '../../hooks/useAuthContext'
 
 const FoodHistoryInfo = ( {n} ) => {
     const {dispatch} = useNutritionContext();
     const [deleteModalState, setDeleteModalState] = useState(false);
+    const {user} = useAuthContext();
 
     console.log(n._id);
     const deleteNutrition = async () => {
+        if (!user){
+            return;
+        }        
         try{
             const response = await fetch('http://10.0.2.2:3000/api/GymPal/nutrition/' + n._id, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
             const json = await response.json();
-            console.log(json);
 
             if (response.ok){
                 dispatch({type:"DELETE_NUTRITION", payload: json})

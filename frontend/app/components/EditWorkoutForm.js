@@ -2,12 +2,14 @@ import { useState } from "react";
 import {Formik} from 'formik';
 import { Button, TextInput, View, Text } from "react-native";
 import { useWorkoutContext } from '../../hooks/useWorkoutContext';
+import { useAuthContext} from '../../hooks/useAuthContext'
 
 const EditWorkoutForm = ({workout, setEditModalState}) => {
     
     const {dispatch} = useWorkoutContext();
     const [error, setError] = useState(null);
     const [missingFields, setMissingFields] = useState([])
+    const {user} = useAuthContext();
 
     return(
         <View>
@@ -15,13 +17,20 @@ const EditWorkoutForm = ({workout, setEditModalState}) => {
                 // Set initial values to current workout values
                 initialValues={{workoutName: workout.workoutName, sets: workout.sets, reps: workout.reps, weight: workout.weight}} 
                 onSubmit={ async (values) => {
+                    if (!user){
+                        setError("Please log in")
+                        return;
+                    }
                     // PATCH request to backend api
                     const response = await fetch('http://10.0.2.2:3000/api/GymPal/workouts/' + workout._id, {
                         method: 'PATCH',
                         body: JSON.stringify(values),
                         headers:{
                             Accept: "application/json",
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            headers: {
+                                'Authorization': `Bearer ${user.token}`
+                            }
                         }
                     })
                     

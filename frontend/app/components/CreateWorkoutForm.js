@@ -2,11 +2,13 @@ import { useState } from "react";
 import {Formik} from 'formik';
 import { Button, TextInput, View, Text } from "react-native";
 import { useWorkoutContext } from '../../hooks/useWorkoutContext';
+import { useAuthContext} from '../../hooks/useAuthContext'
 
 const CreateWorkoutForm = ({setModal}) => {
     const {dispatch} = useWorkoutContext();
     const [error, setError] = useState(null);
     const [missingFields, setMissingFields] = useState([])
+    const {user} = useAuthContext();
 
     return (
         <View>
@@ -14,15 +16,20 @@ const CreateWorkoutForm = ({setModal}) => {
                 // Initialize values to empty strings
                 initialValues={{workoutName: '', sets: '', reps: '', weight: ''}} 
                 onSubmit={ async (values) => {
+
+                    if (!user){
+                        setError("Please log in")
+                        return;
+                    }
                     // Post request to backend api to create new workout
                     const response = await fetch('http://10.0.2.2:3000/api/GymPal/workouts/', {
                         method: 'POST',
                         body: JSON.stringify(values),
                         headers:{
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${user.token}`
                         }
                     })
-                    console.log(values)
                     const workoutJson = await response.json();
                     
                     // If response fails, set an error and set the missing fields

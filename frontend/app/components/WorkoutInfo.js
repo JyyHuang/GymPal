@@ -4,16 +4,24 @@ import { useWorkoutContext } from "../../hooks/useWorkoutContext";
 import { useState } from "react";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
+import { useAuthContext} from '../../hooks/useAuthContext'
 
 // Workout card component
 const WorkoutInfo = ({workout}) => {
     const {dispatch} = useWorkoutContext();
     const [deleteModalState, setDeleteModalState] = useState(false);
     const [editModalState, setEditModalState] = useState(false);
+    const {user} = useAuthContext();
 
     const deleteWorkout = async () => {
+        if (!user){
+            return;
+        }
         const response = await fetch('http://10.0.2.2:3000/api/GymPal/workouts/' + workout._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         });
 
         const workoutJson = await response.json();

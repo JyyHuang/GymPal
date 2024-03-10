@@ -6,12 +6,15 @@ import CreateFoodItemForm from "../components/CreateFoodItemForm";
 import FoodHistory from "../components/FoodHistory";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DeleteModal from "../components/DeleteModal";
+import { useAuthContext} from '../../hooks/useAuthContext'
+import CheckLogin from '../components/CheckLogin'
 
 const nutritionPage = () => {
     const {nutrition, dispatch} = useNutritionContext();
     const [addModal, setAddModal] = useState(false);
     const [foodsModal, setFoodsModal] = useState(false);
     const [deleteModalState, setDeleteModalState] = useState(false);
+    const {user} = useAuthContext();
 
     let totalCalories = 0;
     let totalProtein = 0;
@@ -22,7 +25,10 @@ const nutritionPage = () => {
         const fetchNutrition = async () => {
             try{
                 const response = await fetch('http://10.0.2.2:3000/api/GymPal/nutrition/',{
-                    method:"GET"
+                    method:"GET",
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
             });
 
                 const nutritionJson = await response.json();
@@ -35,8 +41,10 @@ const nutritionPage = () => {
                 console.log(err)
             }
         }
-        fetchNutrition();
-    } ,[dispatch]);
+        if (user){
+            fetchNutrition();
+        }
+    } ,[dispatch, user]);
     
     {nutrition && nutrition.forEach((n) => {
         totalCalories += n.calories;
@@ -47,9 +55,15 @@ const nutritionPage = () => {
     }
 
     const deleteAllNutrition = async () => {
+        if(!user){
+            return;
+        }
         try{
             const response = await fetch('http://10.0.2.2:3000/api/GymPal/nutrition/', {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
 
             const json = await response.json();
@@ -61,7 +75,8 @@ const nutritionPage = () => {
             console.log(err);
         }
     }
-        
+
+    if (!user) return <CheckLogin></CheckLogin>
     return (
     <View className='flex-1 bg-neutral-800'>
         

@@ -1,16 +1,22 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNutritionContext } from '../../hooks/useNutritionContext';
+import { useAuthContext} from '../../hooks/useAuthContext'
 
 
 const FoodSearchItem = ({food, setAddModal}) => {
     const {dispatch} = useNutritionContext();
+    const {user} = useAuthContext();
 
     const addFoodItem = async () => {
+        if (!user){
+            return;
+        }
         const response = await fetch(`http://10.0.2.2:3000/api/GymPal/nutrition/`, {
             method: 'POST',
             body: JSON.stringify({"foodName":food?.description, "calories":food?.calories?.value, "protein":food?.protein?.value, "fat": food?.fat?.value}),
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         }
         )

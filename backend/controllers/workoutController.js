@@ -84,6 +84,7 @@ async function editWorkout(req, res){
 
     const { workoutName, sets, reps, weight } = req.body;
 
+    const user_id = req.user._id
     // Handle User Error Messages
     const missingFields = []
 
@@ -108,7 +109,7 @@ async function editWorkout(req, res){
     };
 
     try{
-        const workout = await Workout.findOneAndUpdate({_id: id}, {
+        const workout = await Workout.findOneAndUpdate({_id: id, user_id: user_id}, {
             ...req.body
         }, {new: true});
     

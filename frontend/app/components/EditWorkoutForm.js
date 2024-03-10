@@ -21,16 +21,14 @@ const EditWorkoutForm = ({workout, setEditModalState}) => {
                         setError("Please log in")
                         return;
                     }
+
                     // PATCH request to backend api
                     const response = await fetch('http://10.0.2.2:3000/api/GymPal/workouts/' + workout._id, {
                         method: 'PATCH',
                         body: JSON.stringify(values),
                         headers:{
-                            Accept: "application/json",
                             'Content-Type': 'application/json',
-                            headers: {
-                                'Authorization': `Bearer ${user.token}`
-                            }
+                            'Authorization': `Bearer ${user.token}`
                         }
                     })
                     

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const workoutRoutes = require('./routes/workouts');
 const nutritionRoutes = require('./routes/nutrition');
+const userRoutes = require('./routes/user');
 
 
 // express app
@@ -22,6 +23,8 @@ app.use((req, res, next) => {
 app.use('/api/GymPal/workouts/', workoutRoutes);
 // calorie routes
 app.use('/api/GymPal/nutrition/', nutritionRoutes);
+// user routes
+app.use('/api/GymPal/user/', userRoutes);
 
 // Cron job to delete DB every midnight
 cron.schedule('0 0 * * *', async () => {
